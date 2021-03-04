@@ -15,4 +15,3 @@ There, for each instance, you will see if the test is a:
 * "error" (clingo error).
 
 For each instance, you can find the list of all optimal solutions in the [solutions](./solutions) folder.
-Your encoding only need to find one optimal solution.
