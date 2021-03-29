@@ -30,25 +30,25 @@ def test(inst, timeout):
     except RuntimeError as e:
         raise e
 
-    solutions = stdout.decode('utf-8').replace(" ", ',').replace("Answer:\n",'')
+    solutions = stdout.decode('utf-8').replace(" ", '*').replace("Answer:\n",'')
     solutions = solutions[:-1]
     solutions = solutions.split("\n")
-    for s in solutions:
-        s = s.split(",")
-        s.sort()
+    for i in range(len(solutions)):
+        solutions[i] = solutions[i].split("*")
+        solutions[i].sort()
     solutions.sort()
 
     # check optimal solution
     inst_sol = inst[:-2]+"json"
     with open(SOLUTIONS+inst_sol,"r") as infile:
         ref_solutions = infile.read()
-    ref_solutions = stdout.decode('utf-8').replace(" ", ',').replace("Answer:\n",'')
-    ref_solutions = ref_solutions[:-1]
-    ref_solutions = ref_solutions.split("\n")
-    for s in ref_solutions:
-        s = s.split(",")
-        s.sort()
+    ref_solutions = ref_solutions[2:-2].replace("),",")*")
+    ref_solutions = ref_solutions.split(",\n")
+    for i in range(len(ref_solutions)):
+        ref_solutions[i] = ref_solutions[i][2:-1].split("*")
+        ref_solutions[i].sort()
     ref_solutions.sort()
+    for s in ref_solutions:
     return solutions[-1] in ref_solutions, time
 
 def main():
