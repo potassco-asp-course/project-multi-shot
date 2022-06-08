@@ -8,6 +8,8 @@ import time
 
 CLINGO = "/usr/share/miniconda/bin/clingo"
 PYTHON = "/usr/share/miniconda/bin/python"
+CLINGO = "clingo"
+PYTHON = "python"
 INSTANCES = "instances/"
 REF_ENC = "checker.lp"
 DUMMY = "dummy.lp"
@@ -39,18 +41,17 @@ def test(inst, timeout):
     solutions.sort()
 
     # check optimal solution
+    import json
     inst_sol = inst[:-2]+"json"
-    with open(SOLUTIONS+inst_sol,"r") as infile:
-        ref_solutions = infile.read()
-    ref_solutions = ref_solutions[2:-2].replace("),",")*")
-    ref_solutions = ref_solutions.split(",\n")
-    for i in range(len(ref_solutions)):
-        ref_solutions[i] = ref_solutions[i][2:-1].split("*")
-        ref_solutions[i].sort()
-    ref_solutions.sort()
-    for s in ref_solutions:
-        s.sort()
-    return solutions[-1] in ref_solutions, time
+    with open(SOLUTIONS + inst_sol, "r") as infile:
+        ref_solutions = json.load(infile)
+    solution = solutions[-1]
+    result = False
+    for ref_solution in ref_solutions['models']:
+        if solution == ref_solution:
+            result = True
+    return result, time
+
 
 def main():
     # check input
