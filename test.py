@@ -8,8 +8,6 @@ import time
 
 CLINGO = "/usr/share/miniconda/bin/clingo"
 PYTHON = "/usr/share/miniconda/bin/python"
-CLINGO = "clingo"
-PYTHON = "python"
 INSTANCES = "instances/"
 REF_ENC = "checker.lp"
 DUMMY = "dummy.lp"
